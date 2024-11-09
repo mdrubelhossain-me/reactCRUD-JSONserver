@@ -12,7 +12,23 @@ const EmployListing = () => {
   }
 
   const Removefunction=(id)=>{
-    
+    if(window.confirm('Do you want to delete?')){
+      fetch("http://localhost:8000/employee/"+id, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("Deleted Successfully");
+            window.location.reload();
+          } else {
+            throw new Error("Failed to save data");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Error: " + err.message);
+        });
+    }
   }
 
   const LoadDetails=(id)=>{

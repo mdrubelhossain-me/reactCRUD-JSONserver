@@ -1,49 +1,55 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const ListEdit = () => {
+  // Initialize states for form data
+  const [data, setData] = useState({});
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [active, setActive] = useState(true);
+  const [validation, setValidation] = useState(false);
 
-  // const [data, setData] = useState({});
-
+  // Extract empid from URL params
   const { empid } = useParams();
+  const navigate = useNavigate();
 
+  // Fetch employee data on component mount
   useEffect(() => {
     fetch(`http://localhost:8000/employee/${empid}`)
       .then((response) => response.json())
       .then((data) => {
-
-      }
-        // setData(data)
-    )
+        setData(data);
+        setId(data.id);
+        setName(data.name || "");
+        setEmail(data.email || "");
+        setPhone(data.phone || "");
+        setActive(data.active || true);
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [empid]);
 
-  const [id, idChange] = useState("");
-  const [name, nameChange] = useState("");
-  const [email, emailChange] = useState("");
-  const [phone, phoneChange] = useState("");
-  const [active, activeChange] = useState(true);
-  const [validation, valChange]=useState(false);
-
-  const navigate = useNavigate();
-
+  // Handle form submission (update data)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const setData = { name, email, phone, active };
+    // Prepare the updated data
+    const updatedData = { name, email, phone, active };
 
-    fetch("http://localhost:8000/employee", {
-      method: "POST",
+    // Send PUT request to update the data
+    fetch(`http://localhost:8000/employee/${id}`, {
+      method: "PUT", // Changed to PUT for updating existing data
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(setData),
+      body: JSON.stringify(updatedData),
     })
       .then((response) => {
         if (response.ok) {
-          alert("Saved Successfully");
-          navigate("/");
+          alert("Updated Successfully");
+          navigate("/"); // Redirect to home page
         } else {
-          throw new Error("Failed to save data");
+          throw new Error("Failed to update data");
         }
       })
       .catch((err) => {
@@ -52,12 +58,10 @@ const ListEdit = () => {
       });
   };
 
-
-
   return (
-      <div className="container">
+    <div className="container">
       <div className="card p-3">
-        <h2 className="border-bottom pb-2">Create New</h2>
+        <h2 className="border-bottom pb-2">Edit Employee</h2>
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="row g-3">
@@ -65,8 +69,7 @@ const ListEdit = () => {
                 <label className="form-label">Id</label>
                 <input
                   value={id}
-                  disabled="disabled"
-                  onChange={(e) => e.target.value}
+                  disabled
                   type="text"
                   className="form-control"
                 />
@@ -75,38 +78,39 @@ const ListEdit = () => {
                 <label className="form-label">Name</label>
                 <input
                   value={name}
-                  onChange={(e) => nameChange(e.target.value)}
-                  onMouseDown={(e)=>valChange(true)}
+                  onChange={(e) => setName(e.target.value)}
+                  onMouseDown={() => setValidation(true)}
                   type="text"
                   className="form-control"
-                  
                 />
-                {name.length==0 && validation && <span className="text-danger">This field is required</span>}
+                {name.length === 0 && validation && (
+                  <span className="text-danger">This field is required</span>
+                )}
               </div>
               <div className="col-lg-6 col-md-6 col-sm-12">
                 <label className="form-label">Email</label>
                 <input
                   value={email}
-                  onChange={(e) => emailChange(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="form-control"
-                  required
+                  
                 />
               </div>
               <div className="col-lg-6 col-md-6 col-sm-12">
                 <label className="form-label">Phone</label>
                 <input
                   value={phone}
-                  onChange={(e) => phoneChange(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   type="text"
                   className="form-control"
-                  required
+                  
                 />
               </div>
               <div className="form-check">
                 <input
                   checked={active}
-                  onChange={(e) => activeChange(e.target.checked)}
+                  onChange={(e) => setActive(e.target.checked)}
                   className="form-check-input"
                   type="checkbox"
                 />
@@ -117,7 +121,7 @@ const ListEdit = () => {
                   Go Back
                 </Link>
                 <button type="submit" className="btn btn-primary mx-2">
-                  Create
+                  Update
                 </button>
               </div>
             </div>
@@ -125,7 +129,7 @@ const ListEdit = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ListEdit;
