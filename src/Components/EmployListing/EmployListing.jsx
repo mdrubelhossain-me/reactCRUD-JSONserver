@@ -1,10 +1,27 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EmployListing = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  const LoadEdit=(id)=>{
+    navigate("/list/edit/"+id);
+  }
+
+  const Removefunction=(id)=>{
+    
+  }
+
+  const LoadDetails=(id)=>{
+    navigate("/list/details/"+id);
+  }
+
+
+
+
 
   useEffect(() => {
     fetch("http://localhost:8000/employee")

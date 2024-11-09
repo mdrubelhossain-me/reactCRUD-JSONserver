@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<EmployListing/>}></Route>
           <Route path="/list/create" element={<ListCreate/>}></Route>
-          <Route path="/list/edit" element={<ListEdit/>}></Route>
+          <Route path="/list/edit/:id" element={<ListEdit/>}></Route>
           <Route path="/list/details/:id" element={<ListDetails/>}></Route>
         </Routes>
       </BrowserRouter>
