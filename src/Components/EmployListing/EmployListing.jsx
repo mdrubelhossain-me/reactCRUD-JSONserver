@@ -41,13 +41,13 @@ const EmployListing = () => {
                       <td>{list.email}</td>
                       <td>{list.phone}</td>
                       <td>
-                        <a href="#" className="btn btn-primary">
+                        <a onClick={()=>LoadEdit(list.id)} className="btn btn-primary">
                           Edit
                         </a>
-                        <a href="#" className="btn btn-danger mx-2">
+                        <a onClick={()=>Removefunction(list.id)} className="btn btn-danger mx-2">
                           Delete
                         </a>
-                        <a href="#" className="btn btn-success">
+                        <a onClick={()=>LoadDetails(list.id)} className="btn btn-success">
                           Details
                         </a>
                       </td>

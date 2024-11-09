@@ -1,12 +1,31 @@
 {
-    "employee": [
-      { 
-        "id": "1", 
-        "name": "John Doe", 
-        "email": "doe@gmail.com",
-        "phone": "12345"
-
+  "employee": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "doe@gmail.com",
+      "phone": "12345"
+    },
+    {
+      "id": "93c8",
+      "name": "Shah N",
+      "email": "shah@gmail.com",
+      "phone": "12345",
+      "active": true
+    },
+    {
+      "id": "b833",
+      "name": "nabib",
+      "email": "nabib@gmail.com",
+      "phone": "1234",
+      "active": true
+    },
+    {
+      "id": "1e58",
+      "name": "dfdsf",
+      "email": "dfdg@gmail.com",
+      "phone": "786876",
+      "active": true
     }
-    ]
-    
-  }
+  ]
+}
